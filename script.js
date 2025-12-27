@@ -179,30 +179,36 @@ document.addEventListener("DOMContentLoaded", () => {
     loop();
     sparkCanvas.addEventListener("click", (e) => blast(e.clientX, e.clientY));
   }
-});
 
-/* ---------- CLICK TO AUDIO ---------- */
-document.addEventListener("DOMContentLoaded", () => {
+  /* ---------- CLICK TO AUDIO ---------- */
+
   const audio = document.getElementById("bgAudio");
   if (!audio) return;
 
-  const playAudio = async () => {
-    try {
-      audio.volume = 1;
-      await audio.play();
+  let isPlaying = false; // track audio state
 
-      // remove listeners after first successful play
-      window.removeEventListener("click", playAudio);
-      window.removeEventListener("touchstart", playAudio);
-      window.removeEventListener("keydown", playAudio);
+  const toggleAudio = async () => {
+    try {
+      if (!isPlaying) {
+        audio.volume = 1;
+        await audio.play();
+        isPlaying = true;
+        console.log("Audio playing");
+      } else {
+        audio.pause();
+        audio.currentTime = 0; // optional: reset to start
+        isPlaying = false;
+        console.log("Audio stopped");
+      }
     } catch (err) {
-      // browser blocked it — will retry on next interaction
       console.warn("Audio blocked, waiting for user interaction");
     }
   };
 
-  // real user interactions
-  window.addEventListener("click", playAudio, { once: true });
-  window.addEventListener("touchstart", playAudio, { once: true });
-  window.addEventListener("keydown", playAudio, { once: true });
+  // user interactions
+  window.addEventListener("click", toggleAudio);
+  window.addEventListener("touchstart", toggleAudio);
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") toggleAudio(); // optional: toggle with spacebar
+  });
 });

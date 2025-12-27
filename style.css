@@ -29,7 +29,7 @@
   }
   
   #year {
-    font-size: clamp(2rem, 10vw, 6rem); /* slightly bigger for emphasis */
+    font-size: clamp(3rem, 10vw, 7rem); /* slightly bigger for emphasis */
     letter-spacing: 0.06em;
     text-align: center;
     z-index: 2;
@@ -70,7 +70,7 @@
       font-size: clamp(1.5rem, 10vw, 2rem);
     }
     #year {
-      font-size: clamp(1.5rem, 12vw, 4rem);
+      font-size: clamp(2rem, 12vw, 5rem);
     }
     .hint {
       font-size: 0.8rem;
